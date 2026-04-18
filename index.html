@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEASON TOWN - กฏเมือง</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Thai', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: radial-gradient(circle at top left, rgba(10,255,137,0.12), transparent 30%),
+                        radial-gradient(circle at bottom right, rgba(9,255,132,0.08), transparent 28%),
+                        #050706;
+            color: #dfffd9;
+            line-height: 1.65;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #020504;
+            color: #a8ff9b;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 1px 12px rgba(0, 255, 147, 0.16);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem;
+            height: 64px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-logo {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 12px rgba(24, 255, 126, 0.55));
+        }
+
+        .nav-title {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-main-title {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: #c8ffb8;
+        }
+
+        .nav-sub-title {
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            color: #7fff9c;
+            margin-top: 0.125rem;
+        }
+
+        .nav-menu {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .nav-menu {
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+            }
+        }
+
+        .nav-menu-item {
+            padding: 0.75rem 1.25rem;
+            font-size: 13px;
+            font-weight: 500;
+            color: #b0ffb9;
+            text-decoration: none;
+            transition: color 0.2s, text-shadow 0.2s;
+        }
+
+        .nav-menu-item:hover {
+            color: #e4ffdb;
+            text-shadow: 0 0 12px rgba(172,255,176,0.6);
+        }
+
+        .nav-menu-item.active {
+            color: #e9ffe0;
+            text-shadow: 0 0 16px rgba(180,255,186,0.9);
+        }
+
+        .nav-menu-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0.75rem;
+            right: 0.75rem;
+            height: 2px;
+            background: linear-gradient(90deg, #0fff7a, #8dff99);
+            border-radius: 1px;
+        }
+
+        .nav-menu-item.active {
+            position: relative;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 16px;
+            background-color: rgba(255,255,255,0.1);
+            margin: 0 0.5rem;
+        }
+
+        .nav-search {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .nav-search {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.35rem 0.85rem;
+                border: 1px solid rgba(8, 255, 140, 0.3);
+                background: rgba(9, 30, 12, 0.65);
+                border-radius: 10px;
+                color: #a8ff99;
+                font-size: 11px;
+            }
+        }
+
+        .nav-mobile {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        @media (min-width: 768px) {
+            .nav-mobile {
+                display: none;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background-image: url('banner.jpg');
+            background-color: #1a1f36;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-height: 360px;
+            min-height: 280px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 960px;
+            text-align: center;
+            padding: 2rem 1rem;
+            color: #ffffff;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2rem, 4vw, 3.25rem);
+            margin: 0;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-content p {
+            margin: 0.75rem auto 0;
+            max-width: 760px;
+            color: rgba(255,255,255,0.92);
+            line-height: 1.75;
+            font-size: 1rem;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(14,18,36,0.38) 0%, rgba(14,18,36,0.72) 65%, rgba(14,18,36,0.94) 100%);
+            z-index: 2;
+        }
+
+        .hero-gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4rem;
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.95) 75%, #ffffff 100%);
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            z-index: 60;
+            transform-origin: 0%;
+            opacity: 0.96;
+            transform: scaleX(0);
+        }
+
+        .progress-bar div {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, #0cff7e, #7cffac, #82ff9d, #0bff90);
+            box-shadow: 0 0 16px rgba(11, 255, 144, 0.55);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #8fffbe;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb a {
+            color: #7cff94;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #d5ffce;
+        }
+
+        .breadcrumb span {
+            color: #8fffbe;
+        }
+
+        .page-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #d6ffd8;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(10, 255, 130, 0.24);
+            text-align: center;
+        }
+
+        .content {
+            max-width: none;
+            background: rgba(1, 5, 3, 0.82);
+            border: 1px solid rgba(16, 255, 137, 0.18);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 0 40px rgba(7, 255, 120, 0.08);
+        }
+
+        .content h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #b8ffaf;
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(11, 255, 146, 0.35);
+            text-align: center;
+        }
+
+        .content h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #a8ff9f;
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        .content ul,
+        .content ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .content li {
+            margin-bottom: 0.75rem;
+            line-height: 1.75;
+            color: #d8ffcb;
+        }
+
+        .content li strong {
+            color: #a5ff8a;
+        }
+
+        .penalty-glow {
+            display: inline-block;
+            padding: 1px 8px;
+            margin: 0 2px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.95em;
+            border: 1px solid rgba(45, 255, 128, 0.45);
+            box-shadow: 0 0 14px rgba(28, 255, 112, 0.25);
+            background-color: rgba(11, 255, 121, 0.11);
+            color: #afff9c;
+        }
+
+        .text-red {
+            color: #78ff6f;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(10, 255, 139, 0.16);
+            background-color: #020604;
+            margin-top: 3rem;
+        }
+
+        .footer-text {
+            color: #8bffb7;
+            font-size: 12px;
+            margin-bottom: 0.25rem;
+        }
+
+        .footer-copyright {
+            color: #90ffb5;
+            font-size: 13px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            main {
+                padding: 1rem 0.5rem;
+            }
+
+            .page-title {
+                font-size: 1.875rem;
+            }
+
+            .hero {
+                min-height: 200px;
+                max-height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-left">
+                <img src="IMG_5294.png" alt="Logo" class="nav-logo">
+                <div class="nav-title">
+                    <span class="nav-main-title">SEASON TOWN</span>
+                    <span class="nav-sub-title">SERVER RULES</span>
+                </div>
+            </div>
+            <div class="nav-menu">
+                
+                <div class="nav-divider"></div>
+                <a href="/rules" class="nav-menu-item active">กฎเมือง</a>
+                <a href="/rules/police-rules" class="nav-menu-item">กฎตำรวจ</a>
+                <a href="/rules/terms" class="nav-menu-item">Terms & Conditions</a>
+                <div class="nav-divider"></div>
+                <button class="nav-search">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <span>ค้นหา</span>
+                    <kbd>⌘K</kbd>
+                </button>
+            </div>
+            <div class="nav-mobile">
+                <button>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+                <button>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="4" y1="6" x2="20" y2="6"></line>
+                        <line x1="4" y1="12" x2="20" y2="12"></line>
+                        <line x1="4" y1="18" x2="20" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content animate-fade-in">
+            <h1>SEASON TOWN</h1>
+            <p>ผู้เล่นต้องอ่านกฎของประเทศและยอมรับกฎทั้งหมด หากมีการกระทำผิดหรือพฤติกรรมไม่เหมาะสม ทีมงานสามารถลงโทษได้ตามกฎเมืองที่กำหนดไว้</p>
+        </div>
+        <div class="hero-gradient"></div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+        <div></div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <div class="breadcrumb animate-fade-in">
+            <span></span>
+        </div>
+
+        <h1 class="page-title animate-fade-in">กฎเมือง SEASON TOWN</h1>
+
+        <div class="content animate-fade-in">
+            <h2>ROLEPLAY</h2>
+            <ol>
+                <li>Roleplay = สวมบทบาทเป็นตัวละครในเกมตามแบบชีวิตจริง โดยมีกฎคอยควบคุม</li>
+                <li>In Character (IC) = การพูด การแสดงท่าทาง การรับรู้ เฉพาะบทบาทตัวละครในเกมเท่านั้น</li>
+                <li>Out Of Character (OOC) = ห้ามเอาเรื่องราวภายนอกที่ไม่เกี่ยวข้องกับบทบาทภายในเมือง และไม่มีผลกับการเล่นภายในเมือง มาใช้ในเกมทั้งการพูด โพสข้อความและภาพ</li>
+                <li>Meta Gaming (MG) = การรับรู้เรื่องราวภายในเกมด้วยการใช้อุปกรณ์สื่อสารอื่นภายนอกเกม ปรับเงิน 600,000 + <span class="penalty-glow">ส้ม</span></li>
+                <li>Stream Sniping (SS) = ห้ามผู้เล่นที่ออนไลน์อยู่ในประเทศเข้าไปรับชมสตรีมสดของผู้เล่นท่านอื่น เพื่อผลประโยชน์ส่วนตัวหรือพวกพ้อง (มีผลหรือมีความเกี่ยวข้องกับสตอรี่) <span class="penalty-glow">ส้ม</span></li>
+                <li>Breaking Story = การไม่ดำเนินสตอรี่จนจบ ขัดสตอรี่, อ้าง OC, ขอดูหลักฐาน, ขอเล่นใหม่, หนีเข้า AFK, ออกจากเกม, เปลี่ยนรูปลักษณ์ภายนอกขณะดำเนินสตอรี่, ไม่ตามเกมส่งผลให้ผู้เล่นอื่นไม่สามารถสวมบทบาทได้ ปรับเงิน 800,000 + <span class="penalty-glow">เหลือง</span></li>
+                <li>Revenge Kill (RK) = ผู้เล่นที่ถูกฆ่าตาย จะต้องไม่สามารถจำเหตุการณ์ตอนตายหรือสลบได้ (จำเรื่องราวก่อนสลบได้) <span class="penalty-glow">เหลือง</span></li>
+                <li>Toxic = [ห้ามด่าพ่อ/แม่] เหยียดเพศสภาพ เหยียดสีผิว เหยียดเชื้อชาติศาสนา ด่าบุพการี อวัยวะเพศหญิง อวัยวะเพศชาย ดอกทอง กระหรี่ <span class="penalty-glow">แดง</span></li>
+                <li>Sexual Harassment = การคุกคามทางเพศ โดยใช้ท่าทาง คำพูด หรือการพิมพ์ ส่อไปในทางลามก โดยที่ผู้เสียหายไม่ได้ยินยอม <span class="penalty-glow">แดง</span></li>
+                <li>Drive-By (DB) = ห้ามขับรถชนผู้เล่นอื่นโดยเจตนา (ขับบั๊มรถคู่กรณีได้ถ้าหากมีสตอรี่ตีกันอยู่) ปรับเงิน 400,000 + <span class="penalty-glow">เหลือง</span></li>
+                <li>Face Off Character (FOC) = การสวมบทบาท 2 บทบาทในเวลาเดียวกันไม่ว่าจะด้วยเหตุผลใดๆ ก็ตาม รวมไปถึงการสลับ Account ในการเล่นเกม <span class="penalty-glow">แดง</span></li>
+                <li>Use of Bugs (UOB) = ห้ามใช้บั๊กทุกชนิดเพื่อหาผลประโยชน์ให้ตัวเองและพวกพ้องโดยเจตนา <span class="penalty-glow">แดง</span></li>
+                <li>Deathmatch (DM) = ห้ามไปฆ่าผู้เล่นอื่นโดยไม่มีสตอรี่ หรือไม่มีเหตุผลอันควร ปรับเงิน 700,000 + <span class="penalty-glow">เหลือง</span></li>
+                <li>Black Agency (BA) = ห้ามบุคคลที่เป็นหน่วยงานจงใจเอื้อประโยชน์ให้กับบุคคลอื่นโดยไปมีผลกับสตอรี่โดยตรง เช่น ให้การเท็จ / เป็นท่อน้ำเลี้ยง / นำ Item ของหน่วยงานไปให้บุคคลภายนอก/ ให้ข้อมูลภายในกับบุคคลที่ไม่ใช่หน่วยงาน จะถือว่าเป็นหน่วยงานดำ <span class="penalty-glow">แดง</span></li>
+                <li>Red Rebel = พื้นที่ไร้กฎหมาย ไร้การควบคุม ใช้ความรุนแรงได้ทุกรูปแบบ</li>
+                <li>Social Toxic = โพสหรือสตรีมด่า ดูถูก พาดพิง สื่อไปให้ทางให้ร้ายประเทศ ในโซเชียลมีเดีย <span class="penalty-glow">แดง</span></li>
+                <li>Twitter Toxic = ห้ามโพสด่าหรือพิมด่าผู้เล่นคนอื่นและหน่วยงานต่างในประเทศ ทั้งดูถูกพาดพิงให้ร้ายผู้อื่นต่างๆ รวมไปดึงการบัฟลงในทวิตห้ามเด็ดขาด <span class="penalty-glow">ส้ม</span></li>
+                <li>AFK ZONE = ห้ามทำร้ายผู้อื่นใน Zone AFK เด็ดขาด <span class="penalty-glow">แดง</span></li>
+                <li>ห้ามแอบอ้างว่าเป็นทีมงานหรือ Admin รวมไปถึงการกระทำใดๆที่มีการกล่าวถึงหรือแอบอ้างชื่อ <span class="penalty-glow">แดง</span></li>
+                <li>ห้ามนำเรื่องราวใน IC ต่างๆ และเรื่องที่ยังเคลียร์กันไม่จบ ไปเผยแพร่ในพื้นที่สาธารณะ หรือพื้นที่ของตนเอง ทำให้ประเทศเสื่อมเสีย เช่น โพสลง Facebook , นำไปลงสตอรี่ , Discord ฯลฯ เด็ดขาด มีปัญหาอะไรใน IC เคลียร์ไม่จบ กด Ticket เพื่อเคลียร์ปัญหาเท่านั้น ไม่งั้นจะผิดกฎ GSR : Rude chat & Toxic behavior <span class="penalty-glow">แดง</span></li>
+                <li>ห้ามใช้มาโครทุกชนิดรวมถึงมาโคร Gaming Gear ในการทำงานทุกอย่างภายในเมือง <span class="penalty-glow">แดง</span></li>
+                <li>ห้ามดัดแปลงไฟล์ตัวเกมเซิร์ฟเวอร์เด็ดขาด เช่นลง Mod เพิ่มเองจำพวก รถ / Skin / อาวุธ หรือของที่ทำให้โกงผู้เล่นอื่นทุกกรณี[โปร] <span class="penalty-glow">แดง</span></li>
+                <li>ห้ามปั่นป่วนผู้เล่นคนอื่นทำให้เกิดความรำคาญในทุกๆด้านทั้ง กิจกรรม หรือภายในเมือง <span class="penalty-glow">ส้ม</span> ไปถึง <span class="penalty-glow">แดง</span></li>
+                <li>Powergaming [PG] = การกระทำที่เกินจากคนปกติในชีวิตจริงทำได้ หากฝ่าฝืนมีโทษ<span class="penalty-glow">เหลือง</span> (พิจารณาตามหลักฐาน)</li>
+                <li>งานเสริม ถ้าไม่ใช้รถทำงานหรือเอารถส่วนตัวมาใช้ทำ พบเห็น ลบรถส่วนตัวคันนั้นทิ้ง พร้อม ปรับ 600,000 IC</li>
+                <li>การเล่นสตอรี่จำเป็นต้องใช้ หมอ 2 / ตำรวจ 2 ในเมืองถึงจะเล่นสตอรี่ได้รวมไปถึงการตีต่อย/บิดของ/ปล้น/ขโมยรถ  โทษ ปรับ 1,000,000 ต่อคน</li>
+                <li>ห้ามพูดหรือมีพฤติกรรมส่อไปในการ "คุกคามทางเพศ" <span class="penalty-glow">แดง</span></li>
+                <li>หากไม่มียศ [พ่อค้า/แม่ค้า] ห้ามโพสขายของเรท OC ในเกมหรือเสนอราคา ที่เป็นเรท OC ในเกม และการ PM ในเกมให้ทักข้างนอกเพื่อเสนอเรท OC หากต้องการขายของในเกมเรท OC จำเป็นต้องโพสในห้อง Discord ประเทศเท่านั้น <span class="penalty-glow">แดง</span></li>
+                <li>จงใจสร้างหลักฐานปลอมหรือปลอมแปลงหลักฐานในการแจ้งใบผู้อื่น หรือการปลอมแปลงหลักฐานมาแย้งเพื่อให้ตัวเองถูกโทษ <span class="penalty-glow">แดง</span>เท่านั้น</li>
+                <li>Revive Kill = ห้ามชุบ [AED] ผู้เล่นคนอื่นที่ตนเองฆ่าไปและคนอื่นฆ่า มาฆ่าซ้ำ ไม่ว่าจะในกิจกรรม หรือสตอรี่ต่างๆภายในเมือง โทษ ปรับ 3,000,000 IC [ยกเว้นในกรณีที่มีการชุบขึ้นมาเพื่อพูดคุยไกล่เกลี่ย]</li>
+                <li>ห้ามปรับหรือเปลี่ยนปุ่มวิ่งเป็นปุ่มอื่นๆนอกจากปุ่มเดิมของเกม spacebar [ที่เรียกว่าลูกกลิ้ง] / รวมไปถึงการใช้โปรแกรม มาโคร ช่วยกด spacebar หากแอดมินตรวจพบเจอ โทษ<span class="penalty-glow">แดง</span></li>
+                <li>กรณีที่จะทำร้ายเจ้าหน้าที่ [เข้าเวร] ตำรวจ / จราจร / หมอ จำเป็นต้องมีหน่วงงาน ตำรวจ[กองปราบ] 10 คน หมอ 5 คน ในประเทศเท่านั้น ปรับ 3,000,000 IC รวมไปถึงจำคุกในเกม 1 ชั่วโมง</li>
+                <li>หากผู้เล่นคนไหนที่ต้องการเข้าแก๊งและไปเล่นกิจกรรม จำเป็นต้องออนไลน์มากกว่า 5 ชั่วโมงขึ้นไป ปรับ 5,000,000 IC</li>
+                <li>พบเจอผู้เล่นคนไหนบิลค้างในตัวมากกว่า 3 บิล จำนวนเงินมากกว่า 2,000,000 IC ขึ้นไป ทางแอดมินจะมีการเรียกพูดคุยเพื่อบังคับจ่าย หากเลยวันที่ตกลงกันไว้หรือมีการสร้างตัวใหม่เพื่อหลบหนีบิล/พบจอตัวไก่ตัวสำรอง มารับบิลแทน โทษ <span class="penalty-glow">แดง</span> ตามแบนทุกตัว</li>
+                <li>ห้ามใช้แอฟปลอมเสียง ทุกชนิดในเมือง ปรับ 2,000,000 IC หากใช้แอฟปลอมเสียงไปด่าคนหรือบัฟคน <span class="penalty-glow">แดง</span></li>
+                <li>ห้ามใช้สเก็ตบอร์ดในกิจกรรมทุกประเภทในเมือง ปรับ 5,000,000 IC</li>
+                <li>ห้ามเปิดเพลงเข้าไมค์หรือใช้ Soundpad ปรับ 2,000,000 IC หากใช้เอาไปปั่นป่วนคน <span class="penalty-glow">แดง</span></li>
+                <li>ห้ามบูสไมค์หรือเพิ่มเสียงไมค์ดังจนน่ารำคาญ ปรับ 2,000,000 IC หากใช้เอาไปปั่นป่วนคน <span class="penalty-glow">แดง</span></li>
+            </ol>
+
+            <h2>ROLES OF CONDUCT</h2>
+            <ol>
+                <li>ห้ามบัพในงานดำทุกงาน โทษ ปรับ 300,000 ต่อคน</li>
+                <li>ห้ามตีต่อยแย่งกันทำงานดำเด็ดขาด ปรับ 500,000 ต่อคน</li>
+                <li>ทำงานดำไม่สามารถนำมาเป็นสตอรี่ได้ ปรับ 500,000 ต่อคน</li>
+                <li>กรณีทำงานดำแล้วมีคนยืนรอจกอยู่ห้ามปั่นป่วนและห้ามกดขออุ้มไประหว่างแย่งกันจก ปรับ 300,000 ต่อคน</li>
+                <li>ทำงานดำ ขายยา / ขโมยอะไหล่เถื่อน เมื่อทำการขายหรือขโมยแล้ว ห้ามดิสออกเกมเพื่อรีการล็อคขา ปรับ 500,000 ต่อคน + <span class="penalty-glow">เหลือง</span></li>
+                <li>ระหว่างที่ผู้เล่นท่านอื่นจก/ขายยา แล้วกำลังจะหนีหากมีคนไปปั่นป่วนการหลบหนีต่างๆ ถือว่าผิดเช่นกัน [รวมไปถึงการแค้นที่โดนแย่งจกแล้วตามไปกระทืบคนนั้นๆข้างนอกจุดกองปูน] ปรับ 500,000 ต่อคน</li>
+                <li>เมื่อขโมยแล้วระหว่างโดนล็อคขา จงใจออกเกมหรือให้เพื่อนอุ้ม ปรับ 2,000,000 ต่อคน + <span class="penalty-glow">ส้ม</span>(เข้าข่ายPG)</li>
+                <li>กรณีไปทำงานดำห้ามอุ้มบุคคลอื่นไปด้วยจำเป็นต้องนั่งรถไปเท่านั้น ปรับ 500,000 ต่อคน</li>
+                <li>กรณีไปทำงานดำแล้วติดดาว ไม่สามารถหนีหรือระหว่างหนีตำรวจอยู่ ไม่สามารถไปเล่นกิจกรรมต่างๆในเมืองได้ ซ่อมไฟ / งัดธนาคาร / Supply Drop / War Zone / AFK ปรับ 1,000,000 ต่อคน</li>
+                <li>หากทำงานดำแล้วโดนตำรวจไล่อยู่ห้ามขับเข้าไปในวงยึดโซน ปรับ 5,000,000 ต่อคน</li>
+                <li>หากทำงานดำแล้วโดนตำรวจไล่อยู่ห้ามเข้าจุดวาร์ป เช่น War zone [สนามซ้อม] / AFK / จุดวาร์ปเข้าโรงบาล / จุดวาร์ปเข้า ร้านค้า / ปรับ 1,000,000 ต่อคน</li>
+            </ol>
+
+            <h2>Story ไล่ล่านับสกอร์ Kill</h2>
+            <ol>
+                <li>หากเริ่มสตอรี่แล้ว ทุกที่จะไม่ใช่เซฟโซนสามารถตีได้หมด ยกเว้นแต่บริเวณโรงพยาบาล และสถานีตำรวจเท่านั้น โทษ ปรับ 500,000 IC + <span class="penalty-glow">เหลือง</span> [ต่อคน]</li>
+                <li>ห้ามหลบหนีเข้าเซฟโซนเด็ดขาด [คนแจ้งต้องมีคลิปการไล่ล่าให้ชัดเจนว่ามีคนหนีการไล่ล่าเข้าเซฟโซน] โทษ ปรับ 1,000,000 IC + <span class="penalty-glow">เหลือง</span> [ต่อคน]</li>
+                <li>ห้ามบุคคลนอกที่ไม่ได้อยู่ในแก๊งหรือบุคคลนอกมามั่วสตอรี่เด็ดขาด หมายเหตุ : ไม่ว่าจะอยู่ในพื้นที่เรเบลก็ตาม [หากเป็นสตอรี่ขึ้นกับสภาแล้ว] โทษ ปรับ 2,000,000 IC + <span class="penalty-glow">เหลือง</span> [ต่อคน] เพิ่มลง</li>
+                <li>ประชาชนหรือแก็งสามารถมีสตอรี่เถื่อนได้ หมายเหตุ:หากทั้ง2ฝ่ายไม่ไกล่เกลี่ยกัน(จนกว่าจะมีสตอรี่)</li>
+            </ol>
+
+            <h2>Safe Zone</h2>
+            <ol>
+                <li>หากผู้เล่นทำการใดๆในพื้นที่ Safe Zone เช่น ต่อยทำดาเมจผู้เล่นคนอื่น ขโมยรถ โดยปรับ ปรับ 500,000 IC</li>
+                <li>หากผู้เล่นหรือแก๊งค์ไหนมีสตอรี่แล้วหนีจากการโดนไล่ล่ามาจากข้างนอกเข้าสู่พื้นที่ Safe Zone ปรับ 500,000 IC</li>
+                <li>ห้ามทำร้ายผู้เล่นในบริเวณงานขาวหรือจุดโพเสธงานขาวทั้งหมด ปรับ 500,000 IC</li>
+            </ol>
+
+            <h2>การ ซื้อ-ขาย ภายในเมือง</h2>
+            <ol>
+                
+                <li>ระยะเวลาในการส่งหลักฐานเพื่อใช้ในการแจ้ง จะต้องส่งหลักฐานตามเวลาในเชตไม่เกิน 24 ชม. ไม่รับหลักฐานที่เก่าเกิน ส่วนที่ไม่สามารถใช้ในการแจ้งคือการแจ้งที่เกินช่วงเวลาที่รับได้ เช่น Stream snipe และ MG จะต้องแจ้งให้ทัน 42 ชม. (หลักฐานในการแจ้งที่เป็นข้อความนั้น หรือคนที่เกี่ยวข้อง)</li>
+                <li>กรณีของหลักฐานที่ใช้ในการแจ้งเรื่องอื่น ๆ เช่นขาย OC หรือแฮกจะต้องแจ้งภายใน 2 ชั่วโมง (หลักฐานที่แจ้งต้องชัดเจนเป็นหลักฐานที่ชัดเจน ไม่มีภาพเเตกหรือข้อความที่ไม่ชัดเจน)</li>
+            </ol>
+
+            <h2>กฏวงเคอร์ฟิว</h2>
+            <ol>
+                <li>หากเกิดการทะเลาะวิวาท เเล้วเจ้าหน้าที่จะต้องเข้ามาควบคุมสถานการณ์ หากเจ้าหน้าที่เข้าควบคุมเหตุการณ์เปิดวงเคอร์ฟิวเเล้วผู้เล่นไม่ออกเจ้าหน้าที่สามารถ ใช้กฏหมายขั้นสูงสุดได้ทันที(ไม่มีข้อยกเว้นทุกกรณี) เเละมีค่าปรับ 100k จำคุก60นาที(ต่อคน) <span class="text-red">งดประกัน</span></li>
+            </ol>
+
+            
+<h2>การลงโทษ</h2>
+            <ol>
+                <li>💵ปรับเงิน</li>
+                <li>🟨<span class="penalty-glow">เหลือง</span> (ตกเตือน)</li>
+                <li>🟧<span class="penalty-glow">ส้ม</span> (ตักเตือนขั้นสูงสุด)</li>
+                <li>🟥<span class="penalty-glow">แดง</span> (เเบน)</li>
+                <li>⬛<span class="penalty-glow">ดำ</span> (แบนถาวร)</li>
+            </ol>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-text">ดูแลโดยทีมงานSEASON TOWN </p>
+        <p class="footer-copyright">© 2026 SEASON TOWN. All rights reserved.</p>
+    </footer>
+</body>
+</html>
